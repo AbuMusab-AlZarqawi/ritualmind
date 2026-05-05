@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black: #050a05;
+  --deep: #0a110a;
+  --green: #1a7a1a;
+  --bright: #2ecc2e;
+  --glow: #4dff4d;
+  --pale: #a8d5a8;
+  --cream: #e8f5e8;
+  --gold: #c9a84c;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Grain */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.3;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+
+/* Grid background */
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(46,204,46,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(46,204,46,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridScroll 20s linear infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes gridScroll { from { transform: translateY(0); } to { transform: translateY(40px); } }
+
+/* Scanlines */
+.scanlines {
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+  pointer-events: none; z-index: 9997;
+}
+
+[data-rk] button { font-family: 'Rajdhani', sans-serif !important; }
