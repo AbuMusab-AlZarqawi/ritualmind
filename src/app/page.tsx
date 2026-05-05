@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import RecentSealings from "@/components/RecentSealings";
 import { ArchetypeKey } from "@/lib/quiz";
 
-const CONTRACT = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+const CONTRACT = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as 0x${string};
 type Screen = "landing" | "quiz" | "result";
 
 export default function Home() {
@@ -17,26 +17,18 @@ export default function Home() {
   const [resultKey, setResultKey] = useState<ArchetypeKey>("A");
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const { data: totalMinted } = useReadContract({
-    address: CONTRACT,
-    abi: RITUALMIND_ABI,
-    functionName: "totalMinted",
-  });
-
   const handleQuizComplete = (key: ArchetypeKey) => {
     setResultKey(key);
     setScreen("result");
   };
 
-  const handleSealed = () => setRefreshKey(k => k + 1);
-
   return (
     <main className="relative z-10 min-h-screen flex flex-col">
-      <Navbar totalMinted={totalMinted ? Number(totalMinted) : 0} />
+      <Navbar />
       <div className="flex-1">
-        {screen === "landing" && <Landing onStart={() => setScreen("quiz")} totalMinted={totalMinted ? Number(totalMinted) : 0} />}
+        {screen === "landing" && <Landing onStart={() => setScreen("quiz")} totalMinted={0} />}
         {screen === "quiz" && <Quiz onComplete={handleQuizComplete} onBack={() => setScreen("landing")} />}
-        {screen === "result" && <Result archetypeKey={resultKey} onRetake={() => setScreen("landing")} onSealed={handleSealed} />}
+        {screen === "result" && <Result archetypeKey={resultKey} onRetake={() => setScreen("landing")} onSealed={() => setRefreshKey(k => k + 1)} />}
       </div>
       {screen === "landing" && <RecentSealings refreshKey={refreshKey} />}
       <footer className="border-t border-ritual-green/10 py-4 text-center font-mono text-xs text-ritual-pale/25 tracking-widest">
